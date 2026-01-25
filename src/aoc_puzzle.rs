@@ -94,8 +94,7 @@ impl AocPuzzle {
                         } else {
                             ((self.silver)(input), (self.gold)(input))
                         };
-                        result_value =
-                            format!("{}\n{:>35}{}", silver_result, "", gold_result);
+                        result_value = format!("{}\n{:>35}{}", silver_result, "", gold_result);
                     }
                 }
             }
