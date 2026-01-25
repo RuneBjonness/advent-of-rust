@@ -1,6 +1,8 @@
 mod aoc_puzzle;
 mod puzzle_collection;
 mod y2015;
+mod y2016;
+mod y2017;
 
 use aoc_puzzle::PuzzlePart;
 use clap::Parser;
