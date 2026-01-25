@@ -4,6 +4,7 @@ mod y2015;
 mod y2016;
 mod y2017;
 mod y2018;
+mod y2019;
 
 use aoc_puzzle::PuzzlePart;
 use clap::Parser;

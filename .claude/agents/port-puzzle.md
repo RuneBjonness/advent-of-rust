@@ -27,22 +27,31 @@ curl https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/src/2018
 
 **IMPORTANT:** Use Bash with curl to fetch the raw file content. Do NOT use WebFetch because it processes content through an AI model and may not preserve the exact source code needed for porting.
 
-## Step 2: Download Input File
+## Step 2: Download Input File (MANDATORY - DO NOT SKIP)
+
+**This step is CRITICAL. Tests will fail without the input file. You MUST complete this step.**
 
 Download the input file from the TypeScript repo using curl:
 
 ```bash
-curl -o ./input/{year}_{DD}.txt https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/{year}_{DD}.txt
+curl -sL https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/{year}_{DD}.txt -o ./input/{year}_{DD}.txt
 ```
+
+The `-sL` flags enable silent mode and follow redirects.
 
 **IMPORTANT:** Do NOT use WebFetch for this step. WebFetch processes content through an AI model and returns a summary, not the raw file content. You MUST use Bash with curl to download the exact file contents.
 
 Example for year 2018, day 01:
 ```bash
-curl -o ./input/2018_01.txt https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/2018_01.txt
+curl -sL https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/2018_01.txt -o ./input/2018_01.txt
 ```
 
-Verify the download succeeded by checking the file exists and has content.
+**After downloading, verify the file exists and has content:**
+```bash
+ls -la ./input/{year}_{DD}.txt
+```
+
+If the file is empty or missing, the `silver_actual_input` and `gold_actual_input` tests WILL FAIL.
 
 ## Step 3: Check if Year Module Exists
 
@@ -197,7 +206,7 @@ Use these expected values in the Rust test assertions for `silver_actual_input` 
 
 ## Quality Checklist:
 
-- [ ] Input file downloaded to `./input/{year}_{DD}.txt`
+- [ ] **Input file downloaded to `./input/{year}_{DD}.txt` (REQUIRED - tests fail without this)**
 - [ ] All imports are correct (add `use std::collections::{HashMap, HashSet};` if needed)
 - [ ] Functions return `Box<dyn Display>` with the result
 - [ ] Tests include example inputs from TypeScript or puzzle description
@@ -214,4 +223,12 @@ Use these expected values in the Rust test assertions for `silver_actual_input` 
 - Keep helper structs and functions as needed from the TypeScript version
 - Match the return types exactly (integers, strings, etc.)
 
-After creating the files, run `cargo test y{year}::day_{DD}` to verify the port is correct. Report any test failures and attempt to fix them.
+After creating the files, run `cargo test y{year}::day_{DD}` to verify the port is correct.
+
+**All 4 tests must pass before the port is complete:**
+- `silver_test_input` - example input test
+- `gold_test_input` - example input test
+- `silver_actual_input` - real input file test (requires input file from Step 2)
+- `gold_actual_input` - real input file test (requires input file from Step 2)
+
+If the actual input tests fail with a file not found error, go back to Step 2 and download the input file. Report any other test failures and attempt to fix them.
