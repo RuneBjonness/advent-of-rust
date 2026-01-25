@@ -12,20 +12,37 @@ You will be given a year and day to port. Follow this exact workflow:
 
 ## Step 1: Fetch the TypeScript Source
 
-Locate and read the original TypeScript solution at:
-`https://github.com/RuneBjonness/advent-of-code`
+Fetch the original TypeScript solution from GitHub using curl:
 
-Path pattern: `src/{year}/day-{DD}/solution.ts` (where DD is zero-padded)
+```bash
+curl https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/src/{year}/day-{DD}/solution.ts
+```
 
-Use the GitHub raw URL to fetch the file content.
+Path pattern: `src/{year}/day-{DD}/solution.ts` (where DD is zero-padded, e.g., day-01)
 
-## Step 2: Copy Input File
+Example for year 2018, day 01:
+```bash
+curl https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/src/2018/day-01/solution.ts
+```
 
-Fetch and copy the input file from the TypeScript repo:
-- Source URL: `https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/{year}_{DD}.txt`
-- Destination: `./input/{year}_{DD}.txt`
+**IMPORTANT:** Use Bash with curl to fetch the raw file content. Do NOT use WebFetch because it processes content through an AI model and may not preserve the exact source code needed for porting.
 
-Use WebFetch to get the raw content and Write to save it locally.
+## Step 2: Download Input File
+
+Download the input file from the TypeScript repo using curl:
+
+```bash
+curl -o ./input/{year}_{DD}.txt https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/{year}_{DD}.txt
+```
+
+**IMPORTANT:** Do NOT use WebFetch for this step. WebFetch processes content through an AI model and returns a summary, not the raw file content. You MUST use Bash with curl to download the exact file contents.
+
+Example for year 2018, day 01:
+```bash
+curl -o ./input/2018_01.txt https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/input/2018_01.txt
+```
+
+Verify the download succeeded by checking the file exists and has content.
 
 ## Step 3: Check if Year Module Exists
 
@@ -157,16 +174,37 @@ pub fn puzzle() -> AocPuzzle {
 
 ## Step 7: Extract Expected Results
 
-Look at the TypeScript tests to find expected results for the actual input. Use these in the Rust tests.
+Fetch the TypeScript test file to find expected results:
+
+```bash
+curl https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/src/{year}/day-{DD}/solution.spec.ts
+```
+
+Example for year 2018, day 01:
+```bash
+curl https://raw.githubusercontent.com/RuneBjonness/advent-of-code/main/src/2018/day-01/solution.spec.ts
+```
+
+Look for test cases like:
+- `it('should return X for silver'...`
+- `expect(silver(...)).toBe(EXPECTED_VALUE)`
+
+Use these expected values in the Rust test assertions for `silver_actual_input` and `gold_actual_input`.
+
+**If the test file doesn't exist (404):** Run the solution with `cargo run -- -y {YEAR} -d {DAY}` to get the actual results, then add tests with those values.
+
+**IMPORTANT:** Every ported puzzle MUST include `silver_actual_input` and `gold_actual_input` tests that verify the solution produces correct results for the real input file. Do not skip these tests.
 
 ## Quality Checklist:
 
+- [ ] Input file downloaded to `./input/{year}_{DD}.txt`
 - [ ] All imports are correct (add `use std::collections::{HashMap, HashSet};` if needed)
 - [ ] Functions return `Box<dyn Display>` with the result
-- [ ] Tests use examples from TypeScript or puzzle description
-- [ ] Expected results match TypeScript version exactly
+- [ ] Tests include example inputs from TypeScript or puzzle description
+- [ ] Tests include `silver_actual_input` and `gold_actual_input` with correct expected values
 - [ ] Day number is zero-padded in file paths (day_01, not day_1)
 - [ ] Module is registered in year's mod.rs
+- [ ] All tests pass: `cargo test y{year}::day_{DD}`
 
 ## Important Notes:
 
