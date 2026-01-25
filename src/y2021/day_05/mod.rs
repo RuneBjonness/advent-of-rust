@@ -7,14 +7,8 @@ pub fn silver(input: &str) -> Box<dyn Display> {
     for line in input.lines() {
         let points: Vec<&str> = line.split(" -> ").collect();
 
-        let p1: Vec<usize> = points[0]
-            .split(',')
-            .map(|s| s.parse().unwrap())
-            .collect();
-        let p2: Vec<usize> = points[1]
-            .split(',')
-            .map(|s| s.parse().unwrap())
-            .collect();
+        let p1: Vec<usize> = points[0].split(',').map(|s| s.parse().unwrap()).collect();
+        let p2: Vec<usize> = points[1].split(',').map(|s| s.parse().unwrap()).collect();
 
         let (p1x, p1y) = (p1[0], p1[1]);
         let (p2x, p2y) = (p2[0], p2[1]);
@@ -34,7 +28,8 @@ pub fn silver(input: &str) -> Box<dyn Display> {
         }
     }
 
-    let count = m.iter()
+    let count = m
+        .iter()
         .flat_map(|row| row.iter())
         .filter(|&&x| x > 1)
         .count();
@@ -48,14 +43,8 @@ pub fn gold(input: &str) -> Box<dyn Display> {
     for line in input.lines() {
         let points: Vec<&str> = line.split(" -> ").collect();
 
-        let p1: Vec<i32> = points[0]
-            .split(',')
-            .map(|s| s.parse().unwrap())
-            .collect();
-        let p2: Vec<i32> = points[1]
-            .split(',')
-            .map(|s| s.parse().unwrap())
-            .collect();
+        let p1: Vec<i32> = points[0].split(',').map(|s| s.parse().unwrap()).collect();
+        let p2: Vec<i32> = points[1].split(',').map(|s| s.parse().unwrap()).collect();
 
         let (p1x, p1y) = (p1[0], p1[1]);
         let (p2x, p2y) = (p2[0], p2[1]);
@@ -83,7 +72,8 @@ pub fn gold(input: &str) -> Box<dyn Display> {
         }
     }
 
-    let count = m.iter()
+    let count = m
+        .iter()
         .flat_map(|row| row.iter())
         .filter(|&&x| x > 1)
         .count();
