@@ -6,6 +6,7 @@ mod y2017;
 mod y2018;
 mod y2019;
 mod y2020;
+mod y2021;
 
 use aoc_puzzle::PuzzlePart;
 use clap::Parser;
