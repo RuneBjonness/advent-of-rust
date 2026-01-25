@@ -12,6 +12,8 @@ mod day_11;
 mod day_12;
 mod day_13;
 mod day_14;
+mod day_15;
+mod day_16;
 
 use crate::aoc_puzzle::AocPuzzle;
 use std::sync::LazyLock;
@@ -32,6 +34,8 @@ static PUZZLES: LazyLock<Vec<AocPuzzle>> = LazyLock::new(|| {
         day_12::puzzle(),
         day_13::puzzle(),
         day_14::puzzle(),
+        day_15::puzzle(),
+        day_16::puzzle(),
     ]
 });
 
