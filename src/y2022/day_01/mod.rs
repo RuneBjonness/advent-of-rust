@@ -23,19 +23,13 @@ pub fn both(input: &str) -> (Box<dyn Display>, Box<dyn Display>) {
 }
 
 pub fn puzzle() -> AocPuzzle {
-    AocPuzzle::new(2022, 1, silver, gold)
-        .with_both(both)
+    AocPuzzle::new(2022, 1, silver, gold).with_both(both)
 }
 
 fn parse_elves(input: &str) -> Vec<i32> {
     input
         .split("\n\n")
-        .map(|block| {
-            block
-                .lines()
-                .map(|line| line.parse::<i32>().unwrap())
-                .sum()
-        })
+        .map(|block| block.lines().map(|line| line.parse::<i32>().unwrap()).sum())
         .collect()
 }
 

@@ -78,12 +78,7 @@ fn add_to_last_number(s: &str, add: &str) -> String {
             number.insert(0, chars[i]);
         } else if !number.is_empty() {
             let sum = add.parse::<i32>().unwrap() + number.parse::<i32>().unwrap();
-            return format!(
-                "{}{}{}",
-                &s[..i + 1],
-                sum,
-                &s[i + 1 + number.len()..]
-            );
+            return format!("{}{}{}", &s[..i + 1], sum, &s[i + 1 + number.len()..]);
         }
     }
     s.to_string()
@@ -134,8 +129,12 @@ struct Pair {
 }
 
 fn magnitude(p: &Pair) -> i32 {
-    let l = p.left_val.unwrap_or_else(|| magnitude(p.left.as_ref().unwrap()));
-    let r = p.right_val.unwrap_or_else(|| magnitude(p.right.as_ref().unwrap()));
+    let l = p
+        .left_val
+        .unwrap_or_else(|| magnitude(p.left.as_ref().unwrap()));
+    let r = p
+        .right_val
+        .unwrap_or_else(|| magnitude(p.right.as_ref().unwrap()));
     3 * l + 2 * r
 }
 
@@ -198,13 +197,22 @@ mod tests {
 
     #[test]
     fn test_explode() {
-        assert_eq!(explode("[[[[[9,8],1],2],3],4]"), Some("[[[[0,9],2],3],4]".to_string()));
-        assert_eq!(explode("[7,[6,[5,[4,[3,2]]]]]"), Some("[7,[6,[5,[7,0]]]]".to_string()));
+        assert_eq!(
+            explode("[[[[[9,8],1],2],3],4]"),
+            Some("[[[[0,9],2],3],4]".to_string())
+        );
+        assert_eq!(
+            explode("[7,[6,[5,[4,[3,2]]]]]"),
+            Some("[7,[6,[5,[7,0]]]]".to_string())
+        );
     }
 
     #[test]
     fn test_split() {
-        assert_eq!(split("[[[[0,7],4],[15,[0,13]]],[1,1]]"), Some("[[[[0,7],4],[[7,8],[0,13]]],[1,1]]".to_string()));
+        assert_eq!(
+            split("[[[[0,7],4],[15,[0,13]]],[1,1]]"),
+            Some("[[[[0,7],4],[[7,8],[0,13]]],[1,1]]".to_string())
+        );
     }
 
     #[test]
