@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   build-linux:
     runs-on: ubuntu-latest
@@ -14,8 +17,23 @@ jobs:
       - name: Build release
         run: cargo build --release
 
+      - name: Prepare binary for release
+        run: mkdir -p linux && cp target/release/aoc linux/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aoc-linux
-          path: target/release/aoc
+          name: linux
+          path: linux/aoc
+
+      - name: Update latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest Build
+          body: |
+            Automated build from main branch.
+            Commit: ${{ github.sha }}
+          files: linux/aoc
+          prerelease: true
+          make_latest: false

@@ -26,6 +26,9 @@ The project uses GitHub Actions for CI/CD:
   - Runs on `ubuntu-latest`
   - Builds with `cargo build --release`
   - Uploads the release binary as an artifact
+  - Updates the `latest` release with the binary
+
+**Download URL**: `https://github.com/{owner}/{repo}/releases/download/latest/aoc`
 
 ## CLI Interface (must match TypeScript version exactly)
 
