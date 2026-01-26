@@ -18,6 +18,15 @@ cargo fmt                      # Format code
 cargo clippy                   # Lint
 ```
 
+## GitHub Actions
+
+The project uses GitHub Actions for CI/CD:
+
+- **Build workflow** (`.github/workflows/build.yml`): Builds a Linux release binary on pushes to main branch
+  - Runs on `ubuntu-latest`
+  - Builds with `cargo build --release`
+  - Uploads the release binary as an artifact
+
 ## CLI Interface (must match TypeScript version exactly)
 
 ```
