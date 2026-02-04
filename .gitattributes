@@ -1,0 +1,2 @@
+# Ensure input files always use LF line endings
+input/*.txt text eol=lf

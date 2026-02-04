@@ -1,13 +1,12 @@
-use std::collections::HashMap;
 use std::fmt::Display;
 use std::fs;
 use std::time::Instant;
 
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub enum PuzzlePart {
-    Silver,
-    Gold,
-    Both,
+    Silver = 0,
+    Gold = 1,
+    Both = 2,
 }
 
 impl PuzzlePart {
@@ -31,7 +30,7 @@ pub struct AocPuzzle {
     silver: SilverFn,
     gold: GoldFn,
     both: Option<BothFn>,
-    skip_parts: HashMap<PuzzlePart, String>,
+    skip_parts: [Option<&'static str>; 3],
 }
 
 impl AocPuzzle {
@@ -42,7 +41,7 @@ impl AocPuzzle {
             silver,
             gold,
             both: None,
-            skip_parts: HashMap::new(),
+            skip_parts: [None; 3],
         }
     }
 
@@ -51,8 +50,8 @@ impl AocPuzzle {
         self
     }
 
-    pub fn skip(mut self, part: PuzzlePart, reason: &str) -> Self {
-        self.skip_parts.insert(part, reason.to_string());
+    pub fn skip(mut self, part: PuzzlePart, reason: &'static str) -> Self {
+        self.skip_parts[part as usize] = Some(reason);
         self
     }
 
@@ -73,8 +72,8 @@ impl AocPuzzle {
         let mut result_value: String;
         let mut duration_ms = 0.0;
 
-        if let Some(skip_reason) = self.skip_parts.get(&part) {
-            result_value = skip_reason.clone();
+        if let Some(skip_reason) = self.skip_parts[part as usize] {
+            result_value = skip_reason.to_string();
         } else {
             let start = Instant::now();
 
